@@ -1,4 +1,4 @@
-import loadLines from '../LoadLines.js'
+import loadLines from '../../LoadLines.js'
 
 const lines = loadLines('input.txt');
 const numbers = ["zero","one","two","three","four","five","six","seven","eight","nine"];
