@@ -1,6 +1,7 @@
-import fs from 'fs';
+import loadLines from '../../LoadLines.js'
 
-const lines = fs.readFileSync('input.txt', 'utf8').split('\r\n');
+// const lines = loadLines('example.txt');
+const lines = loadLines('input.txt');
 const stackLines = lines.splice(0, lines.findIndex(line => line == "") - 1);
 const instructionLines = lines.splice(2);
 

@@ -1,6 +1,8 @@
 import loadLines from '../../LoadLines.js'
 
+// const lines = loadLines('example.txt');
 const lines = loadLines('input.txt');
+
 const games = lines.reduce((games, line) => {
     const [id, reaches] = line.split(": ");
     const gameId = Number(id.split(" ")[1]);

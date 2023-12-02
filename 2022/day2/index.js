@@ -1,7 +1,9 @@
 import loadLines from '../../LoadLines.js'
 
-// part 1
+// const lines = loadLines('example.txt');
 const lines = loadLines('input.txt');
+
+// part 1
 const game1 = {
     'X':['B','A','C'],
     'Y':['C','B','A'],
