@@ -1,5 +1,4 @@
 import loadLines from '../../LoadLines.js'
-
 function result(part){
     return loadLines('input.txt').map(v=>v.split(" ").map(Number)).reduce((result, sequence) => {
         let val = (part == '2' ? sequence.reverse() : sequence).at(-1);
