@@ -25,5 +25,5 @@ function getSteps({from, to}){
     })
     const gcd = (a, b) => a ? gcd(b % a, a) : b;
     const lcm = (a, b) => a * b / gcd(a, b);
-    return steps.length ? steps.reduce(lcm) : 0;
+    return steps.length ? steps.reduce(lcm) : 0;    
 }
