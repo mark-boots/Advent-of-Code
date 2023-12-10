@@ -1,52 +1,45 @@
-import loadLines from '../../LoadLines.js'
+import loadLines from '../../LoadLines.js';
 
 const lines = loadLines('input.txt');
 const map = lines.map(line => line.split(""));
-
 const directions = {
     up:    { "F": "right", "|": "up",    "7": "left"  },
     right: { "J": "up",    "-": "right", "7": "down"  },
     down:  { "J": "left",  "|": "down",  "L": "right" },
     left:  { "L": "up",    "-": "left",  "F": "down"  },
 };
-
+const seen = new Set();
 let part1 = 0;
-let [pos1, pos2] = getStartPositions();
-let seen = new Set();
-seen.add(posToString(pos1));
+let part2 = 0;
 
+let [pos1, pos2] = getStartPositions();
+seen.add(posToString(pos1));
 while(true){
     pos1 = walk(pos1);
     pos2 = walk(pos2);
-    seen.add(posToString(pos1))
-    seen.add(posToString(pos2))
+    seen.add(posToString(pos1));
+    seen.add(posToString(pos2));
 
     part1++;
     if(pos1.y == pos2.y && pos1.x == pos2.x) {
-        seen.add(posToString(pos1))
+        seen.add(posToString(pos1));
         break;
     }
 }
 
-const lx = map[0].length / 4
-const ly = map.length / 4
-const part2 = sumArray( 
+const lx = map[0].length / 4;
+const ly = map.length / 4;
+part2 = sumArray( 
     map
     .slice(ly, -ly)
     .map((line, y) => line
       .slice(lx, -lx)
-      .filter((_, x) => !seen.has(posToString({x: x+lx, y: y+ly})))
+      .filter((_, x) => !seen.has(`${y+ly},${x+lx}`))
       .length
     )
 )
 
-console.log({
-    part1,
-    part2,
-});
-
-
-// helpers
+console.log({ part1, part2 });
 
 function getStartPositions(){
     const startIdx = lines.join("").indexOf("S");
@@ -62,7 +55,6 @@ function getStartPositions(){
     let pos2 = {y: pos.y, x: pos.x, dir: dir2, val: map[pos.y][pos.x]};
     return [pos1, pos2];
 }
-
 function walk({y,x,dir}){
     let newY = y, newX = x;
     if(dir == 'up') { newY = y - 1 };
@@ -75,6 +67,5 @@ function walk({y,x,dir}){
     let newPos = {y:newY, x:newX, dir:newDir, val: newVal};
     return newPos;
 }
-
-function posToString({y,x}){ return y+","+x }
-function sumArray (arr){ return arr.reduce((a,v)=> a+v) }
+function posToString({y,x}){ return y+","+x };
+function sumArray (arr){ return arr.reduce((a,v)=> a+v) };
