@@ -7,7 +7,7 @@ const emptyRows = getEmptyRows(space);
 const emptyCols = getEmptyCols(space);
 
 console.log({
-    part1: cosmicExpansion(2),       // 8975866
+    part1: cosmicExpansion(2),       // 9693756
     part2: cosmicExpansion(1000000), // 7178258016
 })
 
