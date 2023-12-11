@@ -38,9 +38,9 @@ function cosmicExpansion(expansion){
 function getDistance([p1,p2], expansion){
     const [yMin, yMax] = [p1.y, p2.y].sort((a,b) => a - b)
     const [xMin, xMax] = [p1.x, p2.x].sort((a,b) => a - b)
-    const emptyRowsInRange = emptyRows.filter(v => v > yMin && v < yMax).length;
-    const emptyColsInRange = emptyCols.filter(v => v > xMin && v < xMax).length;
-    const distanceY = yMax - yMin - emptyRowsInRange + (emptyRowsInRange * expansion);
-    const distanceX = xMax - xMin - emptyColsInRange + (emptyColsInRange * expansion);
+    const emptyRowsBetween = emptyRows.filter(v => v > yMin && v < yMax).length;
+    const emptyColsBetween = emptyCols.filter(v => v > xMin && v < xMax).length;
+    const distanceY = yMax - yMin - emptyRowsBetween + (emptyRowsBetween * expansion);
+    const distanceX = xMax - xMin - emptyColsBetween + (emptyColsBetween * expansion);
     return distanceY + distanceX;
 }
