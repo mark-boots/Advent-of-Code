@@ -28,8 +28,8 @@ for(let y = 0, max = Math.max(space.length, space[0].length); y < max; y++){
 }
 
 console.log({
-    part1: cosmicExpansion(2),
-    part2: cosmicExpansion(1000000),
+    part1: cosmicExpansion(2),       //9693756
+    part2: cosmicExpansion(1000000), //717878258016
 })
 
 function cosmicExpansion(expansion){
