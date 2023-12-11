@@ -40,7 +40,7 @@ function getDistance([p1,p2], expansion){
     const [xMin, xMax] = [p1.x, p2.x].sort((a,b) => a - b)
     const emptyRowsBetween = emptyRows.filter(v => v > yMin && v < yMax).length;
     const emptyColsBetween = emptyCols.filter(v => v > xMin && v < xMax).length;
-    const distanceY = yMax - yMin - emptyRowsBetween + (emptyRowsBetween * expansion);
-    const distanceX = xMax - xMin - emptyColsBetween + (emptyColsBetween * expansion);
+    const distanceY = yMax - yMin + (emptyRowsBetween * (expansion - 1));
+    const distanceX = xMax - xMin + (emptyColsBetween * (expansion - 1));
     return distanceY + distanceX;
 }
