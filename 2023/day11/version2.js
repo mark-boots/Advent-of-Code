@@ -36,10 +36,9 @@ console.log({
 })
 
 function cosmicExpansion(factor){
-    return pairDistances.reduce((sum, distance) => sum + expandEmptySpace(distance, factor), 0);
-}
-function expandEmptySpace({yMin, yMax, xMin, xMax, dist}, factor){
-    const er = emptyRows.filter(v => v > yMin && v < yMax).length * (factor - 1);
-    const ec = emptyCols.filter(v => v > xMin && v < xMax).length * (factor - 1);
-    return dist + er + ec;
+    return pairDistances.reduce((sum, {yMin, yMax, xMin, xMax, dist}) => {
+        const er = emptyRows.filter(v => v > yMin && v < yMax).length * (factor - 1);
+        const ec = emptyCols.filter(v => v > xMin && v < xMax).length * (factor - 1);
+        return sum + dist + er + ec;
+    }, 0)
 }
