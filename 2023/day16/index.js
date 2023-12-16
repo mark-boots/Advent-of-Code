@@ -1,6 +1,6 @@
 import loadLines from '../../LoadLines.js';
 
-const GRID = loadLines('input.txt').map(l => l.split(""));
+const GRID = loadLines('input.txt').map(l => l.split(''));
 const [ GRID_H, GRID_W ] = [ GRID.length, GRID[0].length ];
 const withinGrid = (y, x) => y >= 0 && y < GRID_H && x >= 0 && x < GRID_W;
 
@@ -19,8 +19,8 @@ function getEnergizedTiles(beamStart) {
     const seen = new Set();
     const energized = new Set();
     while(beam.length > 0){
-        let [y, x, d] = beam.shift();
-        const key = [y, x, d].join(",");
+        const [y, x, d] = beam.shift();
+        const key = [y, x, d].join(',');
         const [yy, xx] = [[y-1, x], [y, x+1], [y+1, x], [y, x-1]][d];
         
         if (seen.has(key) || !withinGrid(yy, xx)) continue;
