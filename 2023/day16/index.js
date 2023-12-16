@@ -32,21 +32,12 @@ function getEnergizedTiles(beam) {
         if (seen.has(key) || !withinGrid(yy, xx)) continue;
         seen.add(key);
         energized.add(`${yy},${xx}`);
-
         let pos = GRID[yy][xx];
-        if(pos == '/') {
-            beam.push([yy, xx, [1, 0, 3, 2][d]]);
-        } else if(pos == '\\') {
-            beam.push([yy, xx, 3-d]);
-        } else if(pos == '|' && [1, 3].includes(d)){
-            beam.push([yy, xx, 0]);
-            beam.push([yy, xx, 2]);
-        } else if(pos == '-' && [0, 2].includes(d)){
-            beam.push([yy, xx, 1]);
-            beam.push([yy, xx, 3]);
-        } else {
-            beam.push([yy, xx, d]);
-        }
+        if(pos == '/') beam.push([yy, xx, (5-d)%4]);
+        else if(pos == '\\') beam.push([yy, xx, 3-d]);
+        else if(pos == '|' && [1, 3].includes(d)) beam.push([yy, xx, 0], [yy, xx, 2]);
+        else if(pos == '-' && [0, 2].includes(d)) beam.push([yy, xx, 1], [yy, xx, 3]);
+        else beam.push([yy, xx, d]);
     }
     return energized.size;
 }
