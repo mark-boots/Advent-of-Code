@@ -4,3 +4,4 @@ template/example.txt
 template/index.js
 template/input.txt
 package.json
+node_modules

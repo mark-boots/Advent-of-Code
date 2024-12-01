@@ -8,5 +8,9 @@
   },
   "type": "module",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "z3-solver": "^4.12.4"
+  }
 }
