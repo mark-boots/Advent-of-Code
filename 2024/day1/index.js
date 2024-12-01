@@ -1,23 +1,23 @@
 import loadLines from '../../LoadLines.js';
 
-const [left, right] = 
-  loadLines("input.txt")
-    .reduce((arr, line)=>{
-      const [l, r] = line.match(/\d+/g).map(Number)
-      arr[0].push(l);
-      arr[1].push(r);
-      return arr;
-    },[[],[]])
+// prepare
+const [left, right] = rows2cols(loadLines("input.txt").map(l=>l.split(/\s+/g)))
 
-// part 1
-const [lsort, rsort] = [[...left],[...right]].map(v => v.sort((a,b) => a-b));
-const result1 = lsort.reduce((sum, val, idx) => {
-  return sum + Math.abs(val - rsort[idx]);
-}, 0)
-console.log(result1) // 2430334
+// part 1 + 2
+const solution = { part1: 0, part2: 0 };
+for(let i = 0; i < left.length; i++){
+  solution.part1 += Math.abs(smallest(left, i) - smallest(right, i));
+  solution.part2 += left[i] * count(right, left[i]);
+}
+console.log(solution) // { part1: 2430334, part2: 28786472 }
 
-// part 2
-const result2 = left.reduce((sum, val) => {
-  return sum + val * right.filter(v => v == val).length;
-}, 0)
-console.log(result2) // 28786472
+// helper functions
+function rows2cols(arr){
+  return Array.from({ length: arr[0].length }, (_, col) => arr.map(row => row[col]));
+}
+function smallest(arr, nth = 0){
+  return arr.sort((a, b) => a - b)[nth];
+}
+function count(arr, val){
+  return arr.filter(v => v==val).length;
+}
