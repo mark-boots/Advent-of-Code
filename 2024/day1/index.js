@@ -1,7 +1,8 @@
 import loadLines from '../../LoadLines.js';
+const lines = loadLines("input.txt")
 
 // prepare
-const [left, right] = rows2cols(loadLines("input.txt").map(l=>l.split(/\s+/g)))
+const [left, right] = rows2cols(lines.map(l=>l.split(/\s+/g)))
 
 // part 1 + 2
 const solution = { part1: 0, part2: 0 };
