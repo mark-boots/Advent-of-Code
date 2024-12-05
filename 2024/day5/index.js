@@ -6,26 +6,29 @@ const updates = lines.filter(l => l.includes(",")).map(l => l.split(",").map(Num
 
 console.log({
   part1: part1(),
-  // part2: part2(),
+  part2: part2(),
 })
 
+// solutions
 function part1() {
   return updates.reduce((s, u) => isValidUpdate(u) ? s + u[Math.floor(u.length / 2)] : s, 0)
 }
 
-function part2(){
-  const reorderedUpdates = updates.filter(u => !isValidUpdate(u)).map(reorderUpdate);
-  return reorderedUpdates.reduce((s, u) => s + u[Math.floor(u.length / 2)], 0);
+function part2() {
+  return updates
+    .filter(u => !isValidUpdate(u))
+    .map(reorderUpdate)
+    .reduce((sum, u) => sum + u[Math.floor(u.length / 2)], 0);
 }
 
+//helpers
 function isValidUpdate(update) {
   const pageIndex = new Map();
   update.forEach((page, index) => pageIndex.set(page, index));
 
   for (const [X, Y] of rules) {
-      if (pageIndex.has(X) && pageIndex.has(Y) && pageIndex.get(X) > pageIndex.get(Y)) {
-          return false;
-      }
+      if (pageIndex.has(X) && pageIndex.has(Y) && 
+          pageIndex.get(X) > pageIndex.get(Y)) return false;
   }
   return true;
 }
