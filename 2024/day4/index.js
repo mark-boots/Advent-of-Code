@@ -44,6 +44,5 @@ function part1() {
       return r >= 0 && r < rows && c >= 0 && c < cols && grid[r][c] === word[i];
     });
   }
-
   return count
 }
