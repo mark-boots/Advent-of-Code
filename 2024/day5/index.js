@@ -14,12 +14,6 @@ function part1() {
   return updates.reduce((s, u) => isValidUpdate(u) ? s + u[Math.floor(u.length / 2)] : s, 0)
 }
 
-function part2() {
-  return updates
-    .filter(u => !isValidUpdate(u))
-    .map(reorderUpdate)
-    .reduce((sum, u) => sum + u[Math.floor(u.length / 2)], 0);
-}
 
 //helpers
 function isValidUpdate(update) {
@@ -31,6 +25,13 @@ function isValidUpdate(update) {
           pageIndex.get(X) > pageIndex.get(Y)) return false;
   }
   return true;
+}
+
+function part2() {
+  return updates
+    .filter(u => !isValidUpdate(u))
+    .map(reorderUpdate)
+    .reduce((sum, u) => sum + u[Math.floor(u.length / 2)], 0);
 }
 
 function reorderUpdate(update) {
@@ -56,11 +57,11 @@ function reorderUpdate(update) {
       const current = queue.shift();
       sorted.push(current);
       graph.get(current).forEach(neighbor => {
-          if (inDegree.set(neighbor, inDegree.get(neighbor) - 1).get(neighbor) === 0) {
-              queue.push(neighbor);
-          }
+        inDegree.set(neighbor, inDegree.get(neighbor) - 1)
+        if (inDegree.get(neighbor) === 0) {
+          queue.push(neighbor);
+        }
       });
   }
-
   return sorted;
 }
