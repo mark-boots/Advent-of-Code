@@ -19,7 +19,6 @@ function findUniqueAntinodes(extended) {
 
 function calculateAntinodes(locations, extended) {
     const antinodes = new Set();
-    const key = (...args) => args.join(',');
 
     for (let i = 0; i < locations.length; i++) {
         for (let j = i + 1; j < locations.length; j++) {
@@ -46,21 +45,25 @@ function calculateAntinodes(locations, extended) {
     }
     return antinodes;
 }
+
 function antennasMap() {
     const antennas = new Map();
     for (let y = 0; y < grid.length; y++) {
         for (let x = 0; x < grid[y].length; x++) {
             const cell = grid[y][x];
             if (cell!=='.') {
-                if (!antennas.has(cell)) {
-                    antennas.set(cell, []);
-                }
+                if (!antennas.has(cell)) antennas.set(cell, []);
                 antennas.get(cell).push([x, y]);
             }
         }
     }
     return antennas;
 }
+
+function key(...args) {
+    return args.join(',');
+}
+
 function isInBounds(x, y) {
     return x >= 0 && y >= 0 && x < grid[0].length && y < grid.length;
 }
