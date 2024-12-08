@@ -4,8 +4,8 @@ const grid = loadLines("input.txt").map(l => l.split(""));
 const antennas = antennasMap();
 
 console.log({
-    part1: findUniqueAntinodes(false),
-    part2: findUniqueAntinodes(true),
+    part1: findUniqueAntinodes(false),  // 409
+    part2: findUniqueAntinodes(true),   // 1308
 })
 
 function findUniqueAntinodes(extended) {
