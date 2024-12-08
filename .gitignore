@@ -1,7 +1,6 @@
-_template/
-template/
 *.gitignore
 node_modules
 package-lock.json
 package.json
+_template/
 *.png
