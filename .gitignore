@@ -1,8 +1,7 @@
-
-package.json
-template/example.txt
-template/index.js
-template/input.txt
-package.json
+_template/
+template/
+*.gitignore
 node_modules
+package-lock.json
+package.json
 *.png
