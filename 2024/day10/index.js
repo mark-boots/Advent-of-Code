@@ -4,8 +4,8 @@ const map = loadLines("input.txt").map(l => l.split("").map(Number));
 const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 
 console.log({ 
-  part1: solve(map, part1), 
-  part2: solve(map, part2) 
+  part1: solve(map, part1), // 644
+  part2: solve(map, part2)  // 1366
 });
 
 function solve(map, part) {
