@@ -20,7 +20,9 @@ function part1(map, [x, y]) {
   while (queue.length > 0) {
     const [x, y, height] = queue.shift();
     const key = `${x},${y}`;
+
     if (visited.has(key)) continue;
+
     visited.add(key);
 
     if (map[x][y] === 9) {
@@ -28,14 +30,10 @@ function part1(map, [x, y]) {
       continue;
     }
 
-    for (const [dx, dy] of directions) {
-      const nx = x + dx;
-      const ny = y + dy;
-
-      if (validMove(map, nx, ny, height)) {
-        queue.push([nx, ny, map[nx][ny]]);
-      }
-    }
+    directions.forEach(([dx, dy]) => {
+      const [nx, ny] = [x + dx, y + dy];
+      if (validMove(map, nx, ny, height)) queue.push([nx, ny, map[nx][ny]]);
+    });
   }
 
   return nines.size;
@@ -46,12 +44,11 @@ function part2(map, [x, y]) {
     if (map[x][y] === 9) return 1;
     let trailCount = 0;
 
-    for (const [dx, dy] of directions) {
-      const nx = x + dx;
-      const ny = y + dy;
-
+    directions.forEach(([dx, dy]) => {
+      const [nx, ny] = [x + dx, y + dy];
       if (validMove(map, nx, ny, height)) trailCount += dfs(nx, ny, height + 1);
-    }
+    })
+
     return trailCount;
   }
   return dfs(x, y, 0);
