@@ -3,4 +3,4 @@ package-lock.json
 package.json
 _template/
 *.png
-example.txt
+*.txt
