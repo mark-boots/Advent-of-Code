@@ -2,21 +2,15 @@
 import loadLines from '../../LoadLines.js';
 const stones = loadLines("input.txt", false).split(/\s/g).map(Number);
 
-console.log(
-  stonesAfterBlinks(stones, { part1: 25, part2: 75 })
-); // { part1: 183484, part2: 218817038947400 }
+console.log( stonesAfterBlinks(stones, { part1: 25, part2: 75 }) ); 
+// { part1: 183484, part2: 218817038947400 }
 
 function stonesAfterBlinks(stones, blinkStages) {
-  let stoneCounts = new Map();
-
-  for (const stone of stones) {
-      stoneCounts.set(stone, (stoneCounts.get(stone) || 0) + 1);
-  }
+  let stoneCounts = new Map(stones.map(stone => [stone, 1]))
 
   const results = {};
-  const maxStage = Math.max(...Object.values(blinkStages));
 
-  for (let i = 0; i < maxStage; i++) {
+  for (let i = 0; i < Object.values(blinkStages).at(-1); i++) {
       let newStoneCounts = new Map();
 
       for (const [stone, count] of stoneCounts) {
@@ -33,17 +27,11 @@ function stonesAfterBlinks(stones, blinkStages) {
       }
       stoneCounts = newStoneCounts;
 
+      // check if blink stage
       for (const [key, stage] of Object.entries(blinkStages)) {
-          if (i + 1 === stage) {
-              let totalStones = 0;
-              for (const count of stoneCounts.values()) {
-                  totalStones += count;
-              }
-              results[key] = totalStones;
-          }
+          if (i + 1 === stage) results[key] = [...stoneCounts.values()].reduce((s,c) => s+c, 0)
       }
   }
-
   return results;
 }
 
