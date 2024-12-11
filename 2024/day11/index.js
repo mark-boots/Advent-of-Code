@@ -17,9 +17,9 @@ function stonesAfterBlinks(stones, blinkStages) {
           if (stone === 0) {
               newStoneCounts.set(1, (newStoneCounts.get(1) || 0) + count);
           } else if (Math.floor(Math.log10(stone) + 1) % 2 === 0) {
-              const [left, right] = splitNumber(stone);
-              newStoneCounts.set(left, (newStoneCounts.get(left) || 0) + count);
-              newStoneCounts.set(right, (newStoneCounts.get(right) || 0) + count);
+              const [l, r] = splitNumber(stone);
+              newStoneCounts.set(l, (newStoneCounts.get(l) || 0) + count);
+              newStoneCounts.set(r, (newStoneCounts.get(r) || 0) + count);
           } else {
               const newStone = stone * 2024;
               newStoneCounts.set(newStone, (newStoneCounts.get(newStone) || 0) + count);
@@ -29,7 +29,7 @@ function stonesAfterBlinks(stones, blinkStages) {
 
       // check if blink stage
       for (const [key, stage] of Object.entries(blinkStages)) {
-          if (i + 1 === stage) results[key] = [...stoneCounts.values()].reduce((s,c) => s+c, 0)
+          if (i + 1 === stage) results[key] = [...stoneCounts.values()].reduce((s,v) => s+v, 0)
       }
   }
   return results;
