@@ -1,9 +1,8 @@
 // load + prepare
 import loadLines from '../../LoadLines.js';
-const machines = loadLines("input.txt", false).split("\r\n\r\n")
+const machines = loadLines("input.txt", false).split("\r\n\r\n").map(m => m.match(/\d+/g))
 const solve = (adjust = 0) => 
-  machines.reduce((tokens, machine) => {
-    let [ax, ay, bx, by, tx, ty] = machine.match(/\d+/g);
+  machines.reduce((tokens, [ax, ay, bx, by, tx, ty]) => {
     [tx, ty] = [tx, ty].map(v => +v + adjust);
     const d = ax * by - ay * bx;
     const a = (by * tx - bx * ty) / d;
