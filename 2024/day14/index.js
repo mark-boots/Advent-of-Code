@@ -17,14 +17,14 @@ function solve(robots, w, h) {
       if (ny < 0) ny += h;
       grid[ny][nx]++;
     }
-    if (seconds === 100 && part1 === null) part1 = calculateQuadrantProduct(grid);
-    if (part2 === null && detectChristmasTree(grid)) part2 = seconds;
+    if (seconds === 100 && part1 === null) part1 = calcSafetyFactor(grid);
+    if (part2 === null && hasCristmasTree(grid)) part2 = seconds;
     seconds++;
   }
   return { part1, part2 };
 }
 
-function calculateQuadrantProduct(grid) {
+function calcSafetyFactor(grid) {
   const midX = Math.floor(grid[0].length / 2);
   const midY = Math.floor(grid.length / 2);
   const quadrants = [0, 0, 0, 0];
@@ -39,7 +39,7 @@ function calculateQuadrantProduct(grid) {
   return quadrants.reduce((product, count) => product * count, 1);
 }
 
-function detectChristmasTree(grid) {
+function hasCristmasTree(grid) {
   // check if there is a row with a sequence of at least 10 robots?
   for (const row of grid) {
     let count = 0;
@@ -55,8 +55,9 @@ function detectChristmasTree(grid) {
 }
 
 function writeGridToFile(grid) {
-  const gridText = grid
-    .map(row => row.map(cell => (cell > 0 ? '#' : '.')).join('')) 
-    .join('\n'); 
-  fs.writeFileSync('christmas_tree_grid.txt', gridText); 
+  fs.writeFileSync('christmasTree.txt', 
+    grid
+      .map(row => row.map(cell => (cell > 0 ? '#' : '.')).join('')) 
+      .join('\n')
+  )
 }
