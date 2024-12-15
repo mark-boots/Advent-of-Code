@@ -1,3 +1,4 @@
+
 import loadLines from '../../LoadLines.js';
 import fs from 'fs';
 const robots = loadLines('input.txt').map(line => line.match(/-?\d+/g).map(Number));
