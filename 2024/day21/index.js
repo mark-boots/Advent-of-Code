@@ -12,50 +12,49 @@ const keyPads = [
         '<': [1, 0], 'v': [1, 1], '>': [1, 2]
     }
 ];
-let cache;
+let cache; // Cache to store previously computed results for memoization.
 
 console.log({
-    part1: solve(2),
-    part2: solve(25),
+    part1: solve(2),  // 2 intermediate robots.
+    part2: solve(25), // 25 intermediate robots.
 });
 
-function solve(robotDirInputs) {
-    const steps = robotDirInputs + 1;
-    cache = Array.from({ length: steps }, () => ({}));
+function solve(intermediateRobots) {
+    const steps = intermediateRobots + 1; // Total steps = robots + 1 for the main control.
+    cache = Array.from({ length: steps }, () => ({})); // Initialize cache for all steps.
 
     return codes.reduce((total, code) => {
-        const complexity = calcDistance(0, code, steps) * parseInt(code.slice(0, 3));
+        const complexity = calcDistance(0, code, steps) * parseInt(code.slice(0, 3)); 
         return total + complexity;
     }, 0);
 }
 
 function calcDistance(step, seq, steps, start = 'A') {
-    if (step === steps) return seq.length; // Base case: return length if at final robot
-    if (cache[step][seq] !== undefined) return cache[step][seq]; // Check if cached result exists
-    let totalDistance = 0;
-    
+    if (step === steps) return seq.length; // Base case: return length if at the final robot.
+    if (cache[step][seq]) return cache[step][seq]; // Check cache for precomputed result.
+
+    let totalDistance = 0; // Initialize total distance.
+
+    // Process each character in the code sequence.
     for (let i = 0; i < seq.length; i++) {
-        const keyPad = keyPads[+(step > 0)]; // Get the current keypad
-        const [startX, startY] = keyPad[start]; // Get start button coordinates
-        const [endX, endY] = keyPad[seq[i]]; // Get target button coordinates
-        const [gapX, gapY] = keyPad['-']; // Get gap position (invalid position)
+        const keyPad = keyPads[+(step > 0)]; // Select the correct keypad (0 = numkeypad).
+        const [startX, startY] = keyPad[start]; // Get the current position on the keypad.
+        const [endX, endY] = keyPad[seq[i]]; // Get the target position on the keypad.
+        const [gapX, gapY] = keyPad['-']; // Get the position of the gap (invalid).
         
-        // Movement to the target button (up/down and left/right)
-        const verticalMove = '^'.repeat(Math.max(startX - endX, 0)) + 'v'.repeat(Math.max(endX - startX, 0));
-        const horizontalMove = '<'.repeat(Math.max(startY - endY, 0)) + '>'.repeat(Math.max(endY - startY, 0));
-        
-        let minDistance = Infinity;
-        // Check if moving to the gap and calculate distance
-        if (startX !== gapX || endY !== gapY) {
-            minDistance = Math.min(minDistance, calcDistance(step + 1, horizontalMove + verticalMove + 'A', steps));
-        }
-        if (endX !== gapX || startY !== gapY) {
-            minDistance = Math.min(minDistance, calcDistance(step + 1, verticalMove + horizontalMove + 'A', steps));
-        }
+
+        // Calculate movement required to reach the target button.
+        const moveVer = (startX > endX ? '^' : 'v').repeat(Math.abs(startX - endX));
+        const moveHor = (startY > endY ? '<' : '>').repeat(Math.abs(startY - endY));
+
+        let minDistance = Infinity; // Start with an infinite distance.
+        // Try moving horizontally first, then vertically.
+        if (startX !== gapX || endY !== gapY) minDistance = Math.min(minDistance, calcDistance(step + 1, moveHor + moveVer + 'A', steps));
+        // Try moving vertically first, then horizontally.
+        if (endX !== gapX || startY !== gapY) minDistance = Math.min(minDistance, calcDistance(step + 1, moveVer + moveHor + 'A', steps));
 
         totalDistance += minDistance;
-        start = seq[i]; // Update start position to current button
+        start = seq[i]; // Update the current position to the current button.
     }
-
-    return cache[step][seq] = totalDistance;
+    return cache[step][seq] = totalDistance; // Cache and return the computed distance.
 }
