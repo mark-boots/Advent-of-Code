@@ -37,12 +37,11 @@ function calcDistance(step, seq, steps, start = 'A') {
 
     // Process each character in the code sequence.
     for (let i = 0; i < seq.length; i++) {
-        const keyPad = keyPads[+(step > 0)]; // Select the correct keypad (0 = numkeypad).
+        const keyPad = keyPads[step > 0 ? 1 : 0]; // Select the correct keypad (0 = numkeypad).
         const [startX, startY] = keyPad[start]; // Get the current position on the keypad.
         const [endX, endY] = keyPad[seq[i]]; // Get the target position on the keypad.
         const [gapX, gapY] = keyPad['-']; // Get the position of the gap (invalid).
         
-
         // Calculate movement required to reach the target button.
         const moveVer = (startX > endX ? '^' : 'v').repeat(Math.abs(startX - endX));
         const moveHor = (startY > endY ? '<' : '>').repeat(Math.abs(startY - endY));
