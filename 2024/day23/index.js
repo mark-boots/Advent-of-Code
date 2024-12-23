@@ -13,7 +13,7 @@ function part1() {
   for (const [node, neighbors] of Object.entries(connections)) {
     for (let i = 0; i < neighbors.length; i++) {
       for (let j = i + 1; j < neighbors.length; j++) {
-        const n1 = neighbors[i]
+        const n1 = neighbors[i];
         const n2 = neighbors[j];
         const triplet = [node, n1, n2];
 
