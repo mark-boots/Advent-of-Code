@@ -1,15 +1,15 @@
 import loadLines from '../../LoadLines.js';
-const moves = loadLines("input.txt").map(s => (s[0]=="L"?-1:1) * s.slice(1));
+const input = loadLines("input.txt");
 
 let pos = 50, part1 = 0, part2 = 0;
-
-for (const move of moves) {
-  const newPos = (pos + move + 100) % 100;
-  part1 += newPos === 0;
-  part2 += move > 0 
-    ? Math.floor((pos + move) / 100) - Math.floor(pos / 100) 
-    : Math.floor((pos - 1) / 100) - Math.floor((pos + move - 1) / 100)
-  pos = newPos;
+for (const move of input) {
+  const rot = move.slice(1) * (move[0] == "L" ? -1 : 1)
+  const nPos = (pos + rot + 100) % 100;
+  part1 += nPos === 0;
+  part2 += rot > 0 
+    ? Math.floor((pos + rot) / 100) - Math.floor(pos / 100) 
+    : Math.floor((pos - 1) / 100) - Math.floor((pos + rot - 1) / 100)
+  pos = nPos;
 }
 
 console.log({ part1, part2 });
