@@ -8,7 +8,7 @@ for (const move of input) {
   part1 += nPos === 0;
   part2 += rot > 0 
     ? Math.floor((pos + rot) / 100) - Math.floor(pos / 100) 
-    : Math.floor((pos - 1) / 100) - Math.floor((pos + rot - 1) / 100)
+    : Math.floor((pos - 1) / 100) - Math.floor((pos - 1 + rot) / 100)
   pos = nPos;
 }
 
