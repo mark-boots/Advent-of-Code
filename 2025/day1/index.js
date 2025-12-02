@@ -5,14 +5,10 @@ let pos = 50, part1 = 0, part2 = 0;
 
 for (const move of moves) {
   const newPos = (pos + move + 100) % 100;
-  if (newPos === 0) part1++;
-
-  part2 += move > 0
-    ? Math.floor((pos + move) / 100) - Math.floor(pos / 100)
-    : move < 0
-      ? Math.floor((pos - 1) / 100) - Math.floor((pos + move - 1) / 100)
-      : 0;
-
+  part1 += newPos === 0;
+  part2 += move > 0 
+    ? Math.floor((pos + move) / 100) - Math.floor(pos / 100) 
+    : Math.floor((pos - 1) / 100) - Math.floor((pos + move - 1) / 100)
   pos = newPos;
 }
 
