@@ -13,9 +13,9 @@ const input = loadLines("input.txt");
     const stack = [];
 
     for (const digit of bankDigits) {
-        while (removalsLeft > 0 && stack.length && stack[stack.length - 1] < digit) {
-        stack.pop();
-        removalsLeft--;
+        while (removalsLeft > 0 && stack.at(-1) < digit) {
+            stack.pop();
+            removalsLeft--;
         }
         stack.push(digit);
     }
