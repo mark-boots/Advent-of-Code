@@ -1,37 +1,20 @@
 import loadLines from '../../LoadLines.js';
-
-const grid = loadLines("input.txt").map(line => line.split(''));
+const lines = loadLines("input.txt")
+const grid = lines.map(line => line.split(''));
+const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 
 console.log({
-    part1: solve(grid, false),
+    part1: solve(grid),
     part2: solve(grid, true)
 });
 
-function solve(grid, part2=false, removed = 0) {
-    let remove = [];
-    for (let row = 0; row < grid.length; row++) {
-        for (let col = 0; col < grid[row].length; col++) {
-            if (check(row, col, grid,)) remove.push([row, col]);
-        }
-    }
-    
-    //part 1: no recursion
-    if (!part2) return remove.length
+function solve(grid, recursive = false, count = 0) {
+    const remove = [];
+    for (let r = 0; r < grid.length; r++)
+        for (let c = 0; c < grid[r].length; c++)
+            if (grid[r][c] == '@' && dirs.filter(([y, x]) => grid[r + y]?.[c + x] == '@').length < 4) remove.push([r, c]);
 
-    //part 2: remove and recurse
-    for (const [r, c] of remove) { grid[r][c] = '.'; removed++ }
-    return remove.length === 0 ? removed : solve(grid, part2, removed   );
-}
-
-function check(r, c, g) {
-    if (g[r][c] !== '@') return false;
-    const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
-    let n = 0;
-    for (const [dr, dc] of dirs) {
-        const nr = r + dr, nc = c + dc;
-        if (nr >= 0 && nr < g.length && nc >= 0 && nc < g[nr].length && g[nr][nc] === '@') {
-            if (++n >= 4) return false;
-        }
-    }
-    return true;
+    if (!recursive) return remove.length;
+    remove.forEach(([r, c]) => (grid[r][c] = '.', count++));
+    return remove.length ? solve(grid, true, count) : count;
 }
