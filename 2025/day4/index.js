@@ -9,9 +9,9 @@ console.log({
 
 function part1(grid) {
     let count = 0;
-    for (let r = 0; r < grid.length; r++) {
-        for (let c = 0; c < grid[r].length; c++) {
-            if (isRollAndNeighborsLessThan4(r, c, grid)) count++
+    for (let row = 0; row < grid.length; row++) {
+        for (let col = 0; col < grid[row].length; col++) {
+            if (check(row, col, grid)) count++
         }
     }
     return count;
@@ -21,12 +21,9 @@ function part2(grid) {
     let removed = 0;
     while (true) {
         let toRemove = [];
-        for (let r = 0; r < grid.length; r++) {
-            for (let c = 0; c < grid[r].length; c++) {
-                if (isRollAndNeighborsLessThan4(r, c, grid)) {
-                    toRemove.push([r, c]);
-                    
-                }
+        for (let row = 0; row < grid.length; row++) {
+            for (let col = 0; col < grid[row].length; col++) {
+                if (check(row, col, grid)) toRemove.push([row, col]);
             }
         }
         if (toRemove.length === 0) break;
@@ -37,17 +34,20 @@ function part2(grid) {
 }
 
 
-function isRollAndNeighborsLessThan4(r, c, g) {
+function check(r, c, g) {
     const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
     if(g[r][c] !== '@') return false;
     let n = 0;
     for (const [dr, dc] of dirs) {
         const nr = r + dr, nc = c + dc;
         if (nr >= 0 && nr < g.length && nc >= 0 && nc < g[nr].length) {
-            if (g[nr][nc] === '@') n++;
+            if (g[nr][nc] === '@') {
+                n++;
+                if (n >= 4) return false;
+            }
         }
     }
-    return n < 4;
+    return true;
 }
 
 function cloneGrid(g) {
