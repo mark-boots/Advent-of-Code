@@ -3,8 +3,8 @@ import loadLines from '../../LoadLines.js';
 const grid = loadLines("input.txt").map(line => line.split(''));
 
 console.log({
-  part1: solve(cloneGrid(grid), 1), // snapshot
-  part2: solve(cloneGrid(grid), 2)   // cascade
+  part1: solve(grid, 1), 
+  part2: solve(grid, 2)
 });
 
 function solve(grid, part, removed = 0) {
@@ -35,8 +35,4 @@ function check(r, c, g) {
         }
     }
     return true;
-}
-
-function cloneGrid(g) {
-    return g.map(row => row.slice());
 }
