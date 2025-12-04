@@ -3,25 +3,24 @@ import loadLines from '../../LoadLines.js';
 const grid = loadLines("input.txt").map(line => line.split(''));
 
 console.log({
-    part1: solve(grid, 1),
-    part2: solve(grid, 2)
+    part1: solve(grid, false),
+    part2: solve(grid, true)
 });
 
-function solve(grid, part, removed = 0) {
-    let toRemove = [];
+function solve(grid, part2=false, removed = 0) {
+    let remove = [];
     for (let row = 0; row < grid.length; row++) {
         for (let col = 0; col < grid[row].length; col++) {
-            if (check(row, col, grid,)) toRemove.push([row, col]);
+            if (check(row, col, grid,)) remove.push([row, col]);
         }
     }
-
-    //part 1: count how many removed (no recursion)
-    if (part === 1) return toRemove.length 
+    
+    //part 1: no recursion
+    if (!part2) return remove.length
 
     //part 2: remove and recurse
-    if (toRemove.length === 0) return removed;
-    for (const [r, c] of toRemove) grid[r][c] = '.';
-    return solve(grid, part, removed + toRemove.length);
+    for (const [r, c] of remove) { grid[r][c] = '.'; removed++ }
+    return remove.length === 0 ? removed : solve(grid, part2, removed   );
 }
 
 function check(r, c, g) {
