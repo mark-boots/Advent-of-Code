@@ -3,36 +3,23 @@ import loadLines from '../../LoadLines.js';
 const grid = loadLines("input.txt").map(line => line.split(''));
 
 console.log({
-    part1: part1(cloneGrid(grid)),
-    part2: part2(cloneGrid(grid))
-})
+  part1: solve(cloneGrid(grid), 1), // snapshot
+  part2: solve(cloneGrid(grid), 2)   // cascade
+});
 
-function part1(grid) {
-    let count = 0;
+function solve(grid, part, removed = 0) {
+    let toRemove = [];
     for (let row = 0; row < grid.length; row++) {
         for (let col = 0; col < grid[row].length; col++) {
-            if (check(row, col, grid)) count++
+            if (check(row, col, grid)) toRemove.push([row, col]);
         }
     }
-    return count;
-}
 
-function part2(grid) {
-    let removed = 0;
-    while (true) {
-        let toRemove = [];
-        for (let row = 0; row < grid.length; row++) {
-            for (let col = 0; col < grid[row].length; col++) {
-                if (check(row, col, grid)) toRemove.push([row, col]);
-            }
-        }
-        if (toRemove.length === 0) break;
-        for (const [r, c] of toRemove) grid[r][c] = '.';
-        removed += toRemove.length;
-    }
-    return removed;
+    if (part === 1) return toRemove.length
+    if (toRemove.length === 0) return removed;
+    for (const [r, c] of toRemove) grid[r][c] = '.';
+    return solve(grid, part, removed + toRemove.length);
 }
-
 
 function check(r, c, g) {
     const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
