@@ -18,7 +18,7 @@ function part2() {
     let i = merged.findIndex(([_,mEnd]) => mEnd >= start - 1); // find first index where merged end > range start
     if (i === -1) merged.push([start, end])  // no inbetween entries. insert end of array
     else {
-      while (i < merged.length && merged[i][0] <= end + 1) { // if merged start > range end there is overlap
+      while (i < merged.length && merged[i][0] <= end + 1) { // if merged start < range end there is overlap
         const [mStart, mEnd] = merged[i];
         if(mStart < start) start = mStart; //extend left
         if(mEnd > end) end = mEnd //extend right
