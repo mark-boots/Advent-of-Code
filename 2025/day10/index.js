@@ -17,9 +17,11 @@ for (const machine of machines) {
   part1 += solvePart1(machine);
   part2 += await solvePart2(machine);
 }
-
 console.log({ part1, part2 });
 process.exit(0);
+
+
+//-----------------------
 
 function solvePart1({ targetMask, toggleMasks }) {
   const states = new Map();
@@ -42,6 +44,8 @@ function solvePart1({ targetMask, toggleMasks }) {
   }
   return -1;
 }
+
+//-----------------------
 
 async function solvePart2({ buttons, jolts }) {
   const presses = Array(buttons.length).fill(0).map((_, i) => ctx.Int.const(`b${i}`));
